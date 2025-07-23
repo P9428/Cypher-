@@ -1,0 +1,7 @@
+Flask
+SQLAlchemy
+pandas
+web3
+superfluid-sdk-py
+requests
+typer
