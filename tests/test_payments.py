@@ -88,3 +88,20 @@ def test_skip_unverified_holder(monkeypatch, tmp_path):
     assert mocked.call_count == 0
 
 
+def test_block_high_risk_wallet(monkeypatch, tmp_path):
+    setup_db(tmp_path)
+    session = database.SessionLocal()
+    holder = create_holder(session)
+    create_token(session, holder)
+    create_stream(session)
+    session.close()
+
+    ps = PaymentService()
+    monkeypatch.setattr(ps.sf, "create_or_update_flow", mock.Mock())
+    monkeypatch.setattr("app.payments.screen_wallet", lambda addr: 10)
+
+    ps.process_unpaid_revenue()
+    assert ps.sf.create_or_update_flow.call_count == 0
+
+
+

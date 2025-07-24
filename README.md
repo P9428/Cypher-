@@ -40,7 +40,7 @@ The project uses a simple SQLite database for demo purposes. Each rights holder 
 1. **Clone the repository**
    ```bash
    git clone <repo_url>
-   cd Cypher-
+   cd Cypher
    ```
 2. **Create and activate a virtual environment**
    ```bash

@@ -1,5 +1,5 @@
 import typer
-from app import ingest, dashboard, onboard_user, init_db
+from app import ingest, dashboard, onboard_user as onboard_module, init_db
 from app.logging_config import configure_logging
 from app.payments import PaymentService
 
@@ -17,11 +17,11 @@ def run_payments():
     configure_logging()
     PaymentService().process_unpaid_revenue()
 
-@app.command()
-def onboard_user(holder_id: int):
+@app.command(name="onboard-user")
+def onboard(holder_id: int):
     """Verify a rights holder via simulated KYC."""
     configure_logging()
-    onboard_user.onboard(holder_id)
+    onboard_module.onboard(holder_id)
 
 @app.command()
 def start_dashboard():

@@ -8,7 +8,10 @@ CHAINALYSIS_API_KEY = os.getenv('CHAINALYSIS_API_KEY')
 CHAINALYSIS_API_URL = os.getenv('CHAINALYSIS_API_URL')
 
 # Distribution period for revenue in seconds (default 30 days)
-DISTRIBUTION_PERIOD_SECONDS = int(os.getenv('DISTRIBUTION_PERIOD_SECONDS', str(30 * 24 * 3600)))
+DISTRIBUTION_PERIOD_SECONDS = int(
+    os.getenv("DISTRIBUTION_PERIOD_SECONDS", str(30 * 24 * 3600))
+)
 
 # Risk threshold for Chainalysis wallet screening
 CHAINALYSIS_RISK_THRESHOLD = int(os.getenv('CHAINALYSIS_RISK_THRESHOLD', '8'))
+
