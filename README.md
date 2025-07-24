@@ -1,2 +1,1 @@
-# RoyaltyRails
-Royalty
+Blockchain based royalty payment platform 
