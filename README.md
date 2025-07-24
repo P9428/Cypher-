@@ -1,17 +1,46 @@
-# Cypher Demo
+# Cypher Framework
 
-Cypher is a blockchain-based royalty payment platform that uses Superfluid streaming to deliver real-time USDC earnings to rights holders. This repository contains a simplified prototype demonstrating the end-to-end flow from data ingestion to on-chain payments and a web dashboard.
+Cypher is a prototype royalty distribution platform built on the Base Goerli testnet. It demonstrates how music streaming revenue can be ingested, tokenized and streamed to rights holders in real time using the Superfluid protocol.
+
+## Project Goals
+- Provide an end-to-end example of royalty ingestion, compliance checks and on-chain payouts.
+- Showcase a "glass box" dashboard where rights holders can verify their earnings and transaction history.
+- Serve as a lightweight framework for experimenting with blockchain‑based royalty flows.
 
 ## Architecture Overview
 ```
-CSV files -> Ingestion Service -> SQLite DB -> Payment Service -> Base Goerli -> Flask Dashboard
+CSV Contracts & Revenue
+        ↓
+Ingestion Service
+        ↓
+SQLite Database
+        ↓
+Payment Service (Superfluid SDK)
+        ↓
+Base Goerli Network
+        ↓
+Flask Dashboard
 ```
+The project uses a simple SQLite database for demo purposes. Each rights holder is onboarded with simulated KYC and their wallet is screened via Chainalysis before a payment stream is created.
+
+## Repository Layout
+- `app/` – application modules
+  - `ingest.py` – load contract and streaming CSV data into the database
+  - `onboard_user.py` – mark a rights holder as KYC verified
+  - `payments.py` – calculate revenue and manage Superfluid streams
+  - `dashboard.py` – Flask web server presenting the glass box dashboard
+  - `config.py` – configuration values loaded from environment variables
+  - `database.py`, `models.py` – SQLAlchemy setup and schema
+  - `logging_config.py` – JSON logging setup
+- `data/` – example contract and streaming CSVs
+- `tests/` – unit tests for ingestion and payment logic
+- `main.py` – Typer CLI entry point
 
 ## Setup and Installation
 1. **Clone the repository**
    ```bash
    git clone <repo_url>
-   cd Cypher
+   cd Cypher-
    ```
 2. **Create and activate a virtual environment**
    ```bash
@@ -22,16 +51,14 @@ CSV files -> Ingestion Service -> SQLite DB -> Payment Service -> Base Goerli ->
    ```bash
    pip install -r requirements.txt
    ```
-4. **Environment variables**
-   - Copy `.env.example` to `.env` and fill in the required values:
+4. **Configure environment variables**
+   - Copy `.env.example` to `.env` and provide values for:
      - `TREASURY_WALLET_PRIVATE_KEY` – private key for the treasury wallet
      - `BASE_GOERLI_RPC_URL` – RPC endpoint for Base Goerli
-     - `USDCX_ADDRESS` – address of the USDCx Super Token contract
-     - `CHAINALYSIS_API_KEY` – Chainalysis API key
-     - `CHAINALYSIS_API_URL` – Chainalysis KYT endpoint
-     - `DISTRIBUTION_PERIOD_SECONDS` – period for revenue distribution (default 30 days)
-     - `CHAINALYSIS_RISK_THRESHOLD` – max acceptable wallet risk score
-
+     - `USDCX_ADDRESS` – USDCx Super Token contract address
+     - `CHAINALYSIS_API_KEY` and `CHAINALYSIS_API_URL` – wallet screening API
+     - `DISTRIBUTION_PERIOD_SECONDS` – payout period (default 30 days)
+     - `CHAINALYSIS_RISK_THRESHOLD` – maximum allowed risk score
 5. **Initialize the database**
    ```bash
    python -c "from app import init_db; init_db()"
@@ -42,7 +69,7 @@ CSV files -> Ingestion Service -> SQLite DB -> Payment Service -> Base Goerli ->
    ```bash
    python main.py run-ingestion --contracts data/contracts.csv --streaming data/streaming.csv
    ```
-2. **Onboard a rights holder** (simulated KYC)
+2. **Onboard a rights holder**
    ```bash
    python main.py onboard-user --holder-id 1
    ```
@@ -54,9 +81,12 @@ CSV files -> Ingestion Service -> SQLite DB -> Payment Service -> Base Goerli ->
    ```bash
    python main.py start-dashboard
    ```
+   Visit `http://127.0.0.1:5000` to view the real-time dashboard.
 
 ## Running Tests
-Execute the test suite with:
+To run the unit tests:
 ```bash
 pytest -q
 ```
+
+The tests cover data ingestion and the PaymentService business logic. You may need the project dependencies installed beforehand.
