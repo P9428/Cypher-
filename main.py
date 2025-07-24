@@ -3,7 +3,7 @@ from app import ingest, dashboard, onboard_user, init_db
 from app.logging_config import configure_logging
 from app.payments import PaymentService
 
-app = typer.Typer(help="RoyaltyRails command line interface")
+app = typer.Typer(help="Cypher command line interface")
 
 @app.command()
 def run_ingestion(contracts: str, streaming: str):

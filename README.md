@@ -1,6 +1,6 @@
-# RoyaltyRail Demo
+# Cypher Demo
 
-RoyaltyRail is a blockchain-based royalty payment platform that uses Superfluid streaming to deliver real-time USDC earnings to rights holders. This repository contains a simplified prototype demonstrating the end-to-end flow from data ingestion to on-chain payments and a web dashboard.
+Cypher is a blockchain-based royalty payment platform that uses Superfluid streaming to deliver real-time USDC earnings to rights holders. This repository contains a simplified prototype demonstrating the end-to-end flow from data ingestion to on-chain payments and a web dashboard.
 
 ## Architecture Overview
 ```
@@ -11,7 +11,7 @@ CSV files -> Ingestion Service -> SQLite DB -> Payment Service -> Base Goerli ->
 1. **Clone the repository**
    ```bash
    git clone <repo_url>
-   cd RoyaltyRails
+   cd Cypher
    ```
 2. **Create and activate a virtual environment**
    ```bash

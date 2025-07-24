@@ -1,4 +1,4 @@
-"""RoyaltyRails core package."""
+"""Cypher core package."""
 
 from .database import SessionLocal, engine, Base
 
